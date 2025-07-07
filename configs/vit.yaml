@@ -1,0 +1,48 @@
+# Configuration for Vision Transformer training
+
+# Data configuration
+data:
+  dataset_path: "./tiny-imagenet-200"  # Relative path to dataset
+  batch_size: 64  # Larger batch size for ViT
+  num_workers: 4
+  image_size: [64, 64]
+  mean: [0.485, 0.456, 0.406]
+  std: [0.229, 0.224, 0.225]
+  horizontal_flip_prob: 0.5
+  rotation_degrees: 10  # Less aggressive augmentation
+  color_jitter_params:
+    brightness: 0.1
+    contrast: 0.1
+    saturation: 0.1
+    hue: 0.025
+
+# Model configuration
+model:
+  model_name: "vit"
+  num_classes: 200
+  pretrained: false  # No pretrained ViT available
+  dropout_rate: 0.1
+  # ViT specific parameters
+  vit_patch_size: 8
+  vit_dim: 384
+  vit_depth: 8
+  vit_heads: 12
+  vit_mlp_dim: 768
+
+# Training configuration
+training:
+  num_epochs: 100  # ViT often needs more epochs
+  learning_rate: 0.0003  # Lower learning rate for ViT
+  weight_decay: 0.01  # Higher weight decay
+  optimizer: "adamw"
+  scheduler: "cosine_warm"
+  t_0: 20
+  t_mult: 2
+  save_best_only: true
+  checkpoint_dir: "outputs/checkpoints"
+  save_plots: true
+  plots_dir: "outputs/plots"
+
+# System configuration
+device: "auto"
+seed: 42

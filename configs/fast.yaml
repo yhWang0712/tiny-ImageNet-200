@@ -1,0 +1,41 @@
+# Configuration for fast experimentation and debugging
+
+# Data configuration
+data:
+  dataset_path: "./tiny-imagenet-200"  # Relative path to dataset
+  batch_size: 32  # Reduced batch size to avoid memory issues
+  num_workers: 2  # Reduced workers for faster startup
+  image_size: [64, 64]
+  mean: [0.485, 0.456, 0.406]
+  std: [0.229, 0.224, 0.225]
+  horizontal_flip_prob: 0.5
+  rotation_degrees: 15
+  color_jitter_params:
+    brightness: 0.2
+    contrast: 0.2
+    saturation: 0.2
+    hue: 0.05
+
+# Model configuration
+model:
+  model_name: "resnet18"
+  num_classes: 200
+  pretrained: true
+  dropout_rate: 0.1
+
+# Training configuration
+training:
+  num_epochs: 20  # Fewer epochs for quick testing
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  optimizer: "adamw"
+  scheduler: "cosine"
+  t_max: 20
+  save_best_only: true
+  checkpoint_dir: "outputs/checkpoints"
+  save_plots: true
+  plots_dir: "outputs/plots"
+
+# System configuration
+device: "auto"
+seed: 42

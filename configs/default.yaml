@@ -1,0 +1,52 @@
+# Default configuration for Tiny-ImageNet training
+
+# Data configuration
+data:
+  dataset_path: "./tiny-imagenet-200"  # Relative path to dataset
+  batch_size: 32
+  num_workers: 4
+  image_size: [64, 64]
+  mean: [0.485, 0.456, 0.406]
+  std: [0.229, 0.224, 0.225]
+  horizontal_flip_prob: 0.5
+  rotation_degrees: 15
+  color_jitter_params:
+    brightness: 0.2
+    contrast: 0.2
+    saturation: 0.2
+    hue: 0.05
+
+# Model configuration
+model:
+  model_name: "resnet18"  # Options: resnet18, resnet34, efficientnet_b0, mobilenet_v2, vit
+  num_classes: 200
+  pretrained: true
+  dropout_rate: 0.1
+  # ViT specific parameters
+  vit_patch_size: 8
+  vit_dim: 256
+  vit_depth: 6
+  vit_heads: 8
+  vit_mlp_dim: 512
+
+# Training configuration
+training:
+  num_epochs: 50
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  optimizer: "adamw"  # Options: adam, adamw, sgd
+  momentum: 0.9  # For SGD
+  scheduler: "cosine"  # Options: step, cosine, cosine_warm, none
+  step_size: 10  # For StepLR
+  gamma: 0.1  # For StepLR
+  t_max: 50  # For CosineAnnealingLR
+  t_0: 10  # For CosineAnnealingWarmRestarts
+  t_mult: 2  # For CosineAnnealingWarmRestarts
+  save_best_only: true
+  checkpoint_dir: "outputs/checkpoints"
+  save_plots: true
+  plots_dir: "outputs/plots"
+
+# System configuration
+device: "auto"  # Options: auto, cpu, cuda
+seed: 42
